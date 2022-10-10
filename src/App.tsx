@@ -1,3 +1,4 @@
+import { GridView } from "./components/gridView";
 import "./App.css";
 
 const App = () => {
@@ -40,6 +41,8 @@ const App = () => {
 
         <div className="App-box">{displayTimer()}</div>
       </div>
+
+      <GridView />
     </div>
   );
 };
