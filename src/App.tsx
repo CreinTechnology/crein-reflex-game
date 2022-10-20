@@ -1,5 +1,6 @@
 import { GridView } from "./components/gridView";
 import "./App.css";
+import { RenderRow } from "./components/RenderRow";
 
 const App = () => {
   const displayLifeInfo = () => {
@@ -42,7 +43,9 @@ const App = () => {
         <div className="App-box">{displayTimer()}</div>
       </div>
 
-      <GridView />
+      <RenderRow rowNumber={5}>
+        <GridView />
+      </RenderRow>
     </div>
   );
 };
