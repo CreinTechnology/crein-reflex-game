@@ -43,9 +43,11 @@ const App = () => {
         <div className="App-box">{displayTimer()}</div>
       </div>
 
-      <RenderRow rowNumber={5}>
-        <GridView />
-      </RenderRow>
+      <div className="row-wrapper">
+        <RenderRow rowNumber={5}>
+          <GridView />
+        </RenderRow>
+      </div>
     </div>
   );
 };
