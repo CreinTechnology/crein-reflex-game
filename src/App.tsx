@@ -1,7 +1,6 @@
 import {
   Box,
   ChakraProvider,
-  Flex,
   Heading,
   HStack,
   Stack,
