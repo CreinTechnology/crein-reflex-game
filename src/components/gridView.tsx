@@ -16,6 +16,7 @@ export const GridView: FC<GridViewProps> = (props) => {
           height="40px"
           border="1px solid white"
           backgroundColor="white"
+          cursor="pointer"
         ></Box>
       );
     });
