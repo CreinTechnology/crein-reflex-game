@@ -1,14 +1,36 @@
+import { Box } from "@chakra-ui/react";
 import { FC } from "react";
-import "./gridViewStyles.css";
 
-type GridViewProps = {};
+type GridViewProps = {
+  rowElementsAmount: number;
+};
 
 export const GridView: FC<GridViewProps> = (props) => {
-  const renderRowElements = (length: number) => {
-    return Array.from({ length }).map((_, i) => {
-      return <div key={i} className="row-element"></div>;
+  const { rowElementsAmount } = props;
+  const renderRowElements = (rowElementsAmount: number) => {
+    return Array.from({ length: rowElementsAmount }).map((_, i) => {
+      return (
+        <Box
+          key={`${i} ${new Date().getMilliseconds()}`}
+          width="40px"
+          height="40px"
+          border="1px solid white"
+          backgroundColor="white"
+        ></Box>
+      );
     });
   };
 
-  return <div className="row">{renderRowElements(5)}</div>;
+  return (
+    <Box
+      width="40%"
+      margin="0 auto"
+      display="flex"
+      justifyContent="space-evenly"
+      alignItems="center"
+      padding={4}
+    >
+      {renderRowElements(rowElementsAmount)}
+    </Box>
+  );
 };
