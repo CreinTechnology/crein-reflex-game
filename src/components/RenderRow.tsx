@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react";
 import { FC } from "react";
 
 type RenderRowProps = {
@@ -10,8 +11,8 @@ export const RenderRow: FC<RenderRowProps> = (props) => {
 
   const renderRow = (rowNumber: number) => {
     return Array.from({ length: rowNumber }).map((_, i) => {
-      return <div key={i}>{children}</div>;
+      return <Box key={`${i} ${new Date().getMilliseconds()}`}>{children}</Box>;
     });
   };
-  return <div>{renderRow(rowNumber)}</div>;
+  return <Box>{renderRow(rowNumber)}</Box>;
 };

@@ -1,54 +1,71 @@
+import {
+  Box,
+  ChakraProvider,
+  Heading,
+  HStack,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { GridView } from "./components/gridView";
-import "./App.css";
 import { RenderRow } from "./components/RenderRow";
 
 const App = () => {
-  const displayLifeInfo = () => {
-    const test = 3;
+  const displayLifeInfo = (lifeAmount: number) => {
     return (
-      <div className="App-infobox">
-        <span>Life: {test}</span>
-      </div>
+      <Box border="1px solid white" padding={3}>
+        <Text color="white">Life: {lifeAmount}</Text>
+      </Box>
     );
   };
 
-  const displayPointsInfo = () => {
-    const test = 3;
+  const displayPointsInfo = (pointsAmount: number) => {
     return (
-      <div className="App-infobox">
-        <span>Points: {test}</span>
-      </div>
+      <Box border="1px solid white" padding={3}>
+        <Text color="white">Points: {pointsAmount}</Text>
+      </Box>
     );
   };
 
-  const displayTimer = () => {
-    const time = 60;
+  const displayTimer = (time: number) => {
     return (
-      <div className="App-infobox">
-        <span>Czas: {time}s</span>
-      </div>
+      <Box border="1px solid white" padding={3}>
+        <Text color="white">Czas: {time}s</Text>
+      </Box>
     );
   };
 
   return (
-    <div className="App">
-      <header className="App-header">Reflex</header>
+    <ChakraProvider>
+      <Stack backgroundColor="#282c34" padding={4} minHeight="100vh">
+        <Heading color="white" textAlign="center" padding={4}>
+          Reflex
+        </Heading>
 
-      <div className="App-wraper">
-        <div className="App-box">
-          {displayLifeInfo()}
-          {displayPointsInfo()}
-        </div>
+        <Stack padding={4}>
+          <HStack
+            align="center"
+            justifyContent="space-evenly"
+            margin="0 auto"
+            spacing={15}
+          >
+            {displayLifeInfo(3)}
+            {displayPointsInfo(3)}
+            {displayTimer(3)}
+          </HStack>
+        </Stack>
 
-        <div className="App-box">{displayTimer()}</div>
-      </div>
-
-      <div className="row-wrapper">
-        <RenderRow rowNumber={5}>
-          <GridView />
-        </RenderRow>
-      </div>
-    </div>
+        <Stack>
+          <RenderRow rowNumber={5}>
+            <GridView rowElementsAmount={5} />
+          </RenderRow>
+        </Stack>
+        <HStack align="center" justify="center" spacing={20}>
+          <Button size="lg">Start</Button>
+          <Button size="lg">Reset</Button>
+        </HStack>
+      </Stack>
+    </ChakraProvider>
   );
 };
 
