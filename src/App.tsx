@@ -1,4 +1,8 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Box,
   ChakraProvider,
   Heading,
@@ -7,11 +11,24 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { GridView } from "./components/gridView";
 import { RenderRow } from "./components/RenderRow";
 
 const App = () => {
-  const displayLifeInfo = (lifeAmount: number) => {
+  const initialSeconds = 60;
+  const [seconds, setSeconds] = useState(initialSeconds);
+  const [gameLife, setGameLife] = useState<number>(3);
+  const [gamePoints, setGamePoints] = useState<number>(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => setSeconds(seconds - 1), 1000);
+    if (seconds === 0) clearInterval(interval);
+
+    return () => clearInterval(interval);
+  }, [seconds]);
+
+  const displayLifeInfo = () => {
     return (
       <Box
         border="1px solid white"
@@ -19,14 +36,20 @@ const App = () => {
         backgroundColor="white"
         borderRadius={4}
       >
-        <Text fontWeight="semibold" fontSize="2xl" cursor="default">
-          Life: {lifeAmount}
+        <Text
+          textAlign="center"
+          fontWeight="semibold"
+          fontSize="2xl"
+          cursor="default"
+          minWidth="110px"
+        >
+          Life: {gameLife}
         </Text>
       </Box>
     );
   };
 
-  const displayPointsInfo = (pointsAmount: number) => {
+  const displayPointsInfo = () => {
     return (
       <Box
         border="1px solid white"
@@ -34,8 +57,14 @@ const App = () => {
         backgroundColor="white"
         borderRadius={4}
       >
-        <Text cursor="default" fontWeight="semibold" fontSize="2xl">
-          Points: {pointsAmount}
+        <Text
+          textAlign="center"
+          fontWeight="semibold"
+          fontSize="2xl"
+          cursor="default"
+          minWidth="110px"
+        >
+          Points: {gamePoints}
         </Text>
       </Box>
     );
@@ -45,15 +74,16 @@ const App = () => {
     return (
       <Box
         border="1px solid white"
-        padding={4}
+        padding={3}
         backgroundColor="white"
         borderRadius={4}
       >
         <Text
-          cursor="default"
+          textAlign="center"
           fontWeight="semibold"
-          color="black"
           fontSize="2xl"
+          cursor="default"
+          minWidth="110px"
         >
           Czas: {time}s
         </Text>
@@ -73,18 +103,40 @@ const App = () => {
             align="center"
             justifyContent="space-evenly"
             margin="0 auto"
-            spacing={20}
+            paddingX={2}
           >
-            {displayLifeInfo(3)}
-            {displayTimer(60)}
-            {displayPointsInfo(3)}
+            {displayLifeInfo()}
+            {displayTimer(seconds)}
+            {displayPointsInfo()}
           </HStack>
         </Stack>
 
         <Stack padding={4}>
-          <RenderRow rowNumber={5}>
-            <GridView rowElementsAmount={5} />
-          </RenderRow>
+          {seconds === 0 ? (
+            <Alert
+              status="error"
+              variant="subtle"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+              height="200px"
+              maxWidth="50%"
+              margin="0 auto"
+            >
+              <AlertIcon boxSize="40px" mr={0} />
+              <AlertTitle mt={4} mb={1} fontSize="lg">
+                Time's up.
+              </AlertTitle>
+              <AlertDescription maxWidth="sm" padding={4}>
+                Please, try again.
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <RenderRow rowNumber={5}>
+              <GridView rowElementsAmount={5} />
+            </RenderRow>
+          )}
         </Stack>
 
         <HStack
@@ -92,10 +144,10 @@ const App = () => {
           flexDirection="row"
           justifyContent="center"
           paddingTop={6}
-          spacing={40}
         >
-          <Button size="lg">Start</Button>
-          <Button size="lg">Reset</Button>
+          <Button width="150px" height="50px" onClick={() => setSeconds(60)}>
+            Reset
+          </Button>
         </HStack>
       </Stack>
     </ChakraProvider>
